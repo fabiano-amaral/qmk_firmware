@@ -18,9 +18,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 #define EE_HANDS
+#define TAPPING_TERM 200
 
 // I'm only using Linux, so let's set the Linux mode
-#define UNICODE_SELECTED_MODES UC_LNX
+#define UNICODE_SELECTED_MODES UC_MAC
 
 // Using "I" because it translates to "U" on Colemak
 #define UNICODE_KEY_LNX  LCTL(LSFT(KC_I))
