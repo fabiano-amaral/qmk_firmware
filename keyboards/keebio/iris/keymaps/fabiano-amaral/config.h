@@ -16,10 +16,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #pragma once
-
 #define EE_HANDS
-#define TAPPING_TERM 200
+#define TAPPING_TERM 150
 
+#define AUTO_SHIFT_TIMEOUT 150
+#define NO_AUTO_SHIFT_SPECIAL
 // I'm only using Linux, so let's set the Linux mode
 #define UNICODE_SELECTED_MODES UC_MAC
 
