@@ -5,8 +5,6 @@
 #define _LOWER 1
 #define _RAISE 2
 #define RSESPC LT(_RAISE, KC_SPC)
-#define CESC MT(MOD_LCTL, KC_ESC)
-#define HYPER MT(MOD_HYPR, KC_ESC)
 #define LSELECT G(KC_A)
 #define LSAVE G(KC_S)
 #define LCLOSE G(KC_W)
@@ -18,13 +16,27 @@
 #define LSPACE G(KC_SPC)
 #define TERM C(KC_GRV)
 
+// Mods, teclas com duas funções
+#define CESC MT(MOD_LCTL, KC_ESC)
+#define CMD_SPC MT(MOD_LGUI, KC_SPC)
+#define SHT_BSP MT(MOD_LSFT, KC_BSPC)
+#define HYPER MT(MOD_HYPR, KC_ESC)
+// home row mod
+#define KM_A LALT_T(KC_A)
+#define KM_F LCTL_T(KC_F)
+#define KM_D LSFT_T(KC_D)
+#define KM_S LGUI_T(KC_S)
+
+#define KM_SC RALT_T(KC_SCLN)
+#define KM_J RCTL_T(KC_J)
+#define KM_K RSFT_T(KC_K)
+#define KM_L RGUI_T(KC_L)
+
+#define KM_H LT(LOWER, KC_H)
+#define KM_G LT(LOWER, KC_G)
+
 enum macro_keycodes { KC_ALT_TAB };
 
-enum {
-    TD_SCOLN_COLN,
-    TD_SQT_DQT,
-    TD_LWR_RSE
-};
 
 enum custom_keycodes {
     START = SAFE_RANGE,
@@ -37,14 +49,6 @@ enum custom_keycodes {
     // "f" is positioned as "e" on Colemak.
     THMUP,
 };
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for Caps Lock
-    [TD_SCOLN_COLN] = ACTION_TAP_DANCE_DOUBLE(KC_SCLN, KC_COLN),
-    [TD_SQT_DQT]    = ACTION_TAP_DANCE_DOUBLE(KC_QUOTE, KC_DOUBLE_QUOTE),
-    [TD_LWR_RSE]    = ACTION_TAP_DANCE_DOUBLE(LOWER, RAISE)
-};
-
 
 enum unicode_names {
     CRY2,   // crying face 😢
@@ -80,31 +84,19 @@ const uint32_t PROGMEM unicode_map[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_START] = LAYOUT(
-        //┌────────┬────────┬────────┬────────┬────────┬────────┐                    ┌────────┬────────┬────────┬────────┬────────┬────────┐
-            _______,   KC_1,   KC_2,    KC_3,     KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,     KC_9,   KC_0,   KC_MINS,
-        //├────────┼────────┼────────┼────────┼────────┼────────┤                    ├────────┼────────┼────────┼────────┼────────┼────────┤
-           KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   KC_BSLS,
-        //├────────┼────────┼────────┼────────┼────────┼────────┤                    ├────────┼────────┼────────┼────────┼────────┼────────┤
-            CESC,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-        //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐  ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-           KC_LSHIFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_EQL,     HYPER,  KC_N,    KC_M,   KC_COMM, KC_DOT, KC_SLSH,  KC_RSHIFT,
-        //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘  └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                           LOWER, KC_SPC, KC_LGUI,              KC_ENT,  KC_BSPC, RAISE
-                                      // └────────┴────────┴────────┘           └────────┴────────┴────────┘
+            _______,   KC_1,   KC_2,    KC_3,     KC_4,    KC_5,                            KC_6,    KC_7,    KC_8,     KC_9,   KC_0,   KC_MINS,
+           KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                             KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,   KC_BSLS,
+            CESC,    KM_A,    KM_S,     KM_D,    KM_F,    KM_G,                             KM_H,    KM_J,    KM_K,    KM_L,    KM_SC,   KC_QUOT,
+           KC_LSHIFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______,     _______,    KC_N,    KC_M,   KC_COMM, KC_DOT, KC_SLSH,  KC_RSHIFT,
+                                        LOWER, KC_SPC, KC_LGUI,                            KC_ENT,  KC_BSPC, RAISE
         ),
 
     [_LOWER] = LAYOUT(
-        //┌────────┬────────┬────────┬────────┬────────┬────────┐                    ┌────────┬────────┬────────┬────────┬────────┬────────┐
-            KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,    KC_F8,   KC_F9,  KC_F10,  KC_F11,
-        //├────────┼────────┼────────┼────────┼────────┼────────┤                    ├────────┼────────┼────────┼────────┼────────┼────────┤
-           _______,  KC_GRV, _______, KC_CIRC, _______, _______,                      KC_LCBR, KC_RCBR, _______, KC_LBRC,  KC_RBRC,  TERM,
-        //├────────┼────────┼────────┼────────┼────────┼────────┤                    ├────────┼────────┼────────┼────────┼────────┼────────┤
-           _______, KC_TILD, KC_MINS, _______, _______, _______,                      KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
-        //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐  ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-           _______, _______, _______, _______, _______,  _______, KC_GRV,    _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______, _______,
-        //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘  └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                           XXXXXXX, RSESPC, _______,             _______, _______, XXXXXXX
-                                      // └────────┴────────┴────────┘           └────────┴────────┴────────┘
+           KC_F12,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,    KC_F8,   KC_F9,  KC_F10,  KC_F11,
+           _______, KC_GRV,  _______, KC_CIRC, _______, _______,                      KC_LCBR, KC_RCBR, _______, KC_LBRC,  KC_RBRC,  TERM,
+           _______, KC_TILD, KC_MINS, KC_PPLS, KC_PEQL, _______,                      KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+           _______, _______, KC_UNDS, _______, _______,  _______, KC_GRV,      RESET, KC_HOME, KC_PGDN, KC_PGUP, KC_END,   _______, _______,
+                                      XXXXXXX, RSESPC,   _______,                     _______, _______, XXXXXXX
         ),
 
     // EMOJIS
@@ -120,13 +112,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //├────────┼────────┼────────┼────────┼────────┼────────┤                    ├───────────┼───────────┼────────────┼────────────┼────────────┼───────────┤
             X(EYES), KC_1,     KC_2,     KC_3,   KC_4,    KC_5,                         KC_1,       KC_2,       KC_3,         _______,    _______,    _______,
         //├────────┼────────┼────────┼────────┼────────┼────────┤                    ├───────────┼───────────┼────────────┼────────────┼────────────┼───────────┤
-            _______, _______, _______, _______, _______, _______,                       KC_4,       KC_5,       KC_6,         _______,    _______,    _______,
+            _______, _______, _______, _______, _______, _______,                       DT_PRNT,    DT_DOWN,     DT_UP,         _______,    _______,    _______,
         //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐  ┌────────┼───────────┼───────────┼────────────┼────────────┼────────────┼───────────┤
             _______, _______, _______, _______, _______, _______, RGB_HUI,    RGB_MOD,  KC_7,       KC_8,       KC_9,         _______,    _______,    _______,
         //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘  └───┬────┴───┬───────┴─────────┬─┴────────────┴────────────┴────────────┴───────────┘
                                           XXXXXXX, RGB_VAI, BL_STEP,             RGB_TOG, RGB_SAI, XXXXXXX
                                       // └────────┴────────┴────────┘           └────────┴────────┴────────┘
         )};
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case SFT_T(KC_SPC):
+            return TAPPING_TERM + 1250;
+        case LT(1, KC_GRV):
+            return 130;
+        default:
+            return TAPPING_TERM;
+    }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
